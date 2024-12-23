@@ -1,0 +1,16 @@
+{
+    "name": "express-server-side-rendering",
+    "version": "1.0.0",
+    "main": "./src/index.js",
+    "scripts": {
+        "start": "node src/index.js 1>./logs/output.log 2>./logs/error.log"
+    },
+    "author": "",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+        "express": "^4.21.2",
+        "jsdom": "^25.0.1"
+    },
+    "type": "module"
+}
