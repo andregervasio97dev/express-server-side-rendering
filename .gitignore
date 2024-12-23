@@ -1,5 +1,4 @@
-/config/local.js
+config/local.js
 node_modules
-/logs
-/logs/*.log
+logs
 *.log
