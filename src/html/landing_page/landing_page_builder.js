@@ -21,6 +21,8 @@ export function landingPageBuilder(_req, res) {
     styleElement.textContent = cssFile;
     headElement.appendChild(styleElement);
 
+		createDatabaseInfoCard(doc, prodDatabases);
+
     prodDatabases.forEach((database) => {
         const card = doc.createElement("div");
         const text = doc.createTextNode(
@@ -35,4 +37,22 @@ export function landingPageBuilder(_req, res) {
     const fullHtmlString = doc.documentElement.outerHTML;
     res.set("Content-Type", "text/html");
     res.send(fullHtmlString);
+}
+
+function createDatabaseInfoCard(doc, databaseList) {
+		const card = doc.createElement("div");
+		const numberOfDatabases = databaseList.length;
+		const numberOfOnlineDatabases = getNumberOfOnlineDatabases(databaseList);
+		const text = doc.createTextNode(
+				`Database total (online): ${numberOfDatabases} (${numberOfOnlineDatabases})`
+		);
+		
+		card.classList.add("card");
+		card.appendChild(text);
+		doc.body.querySelector("#database-info-card").appendChild(card);
+
+}
+function getNumberOfOnlineDatabases(databaseList) {
+		// Todo: Implement the getter of online databases
+		return databaseList.length
 }
