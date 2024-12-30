@@ -6,6 +6,8 @@ import fs from "fs";
 
 export function landingPageBuilder(_req, res) {
     const prodDatabases = databaseStatus(config.PROD_DIRECTORY);
+    const testDatabases = databaseStatus(config.TEST_DIRECTORY);
+    const devDatabases = databaseStatus(config.DEV_DIRECTORY);
 
     let htmlFile = fs.readFileSync("./src/html/landing_page/landing_page.html");
     let cssFile = fs.readFileSync("./src/html/landing_page/landing_page.css");
@@ -21,17 +23,9 @@ export function landingPageBuilder(_req, res) {
     styleElement.textContent = cssFile;
     headElement.appendChild(styleElement);
 
-		createDatabaseInfoCard(doc, prodDatabases);
-
-    prodDatabases.forEach((database) => {
-        const card = doc.createElement("div");
-        const text = doc.createTextNode(
-            `Database Name: ${database.name}. Database Status: ${database.status}`
-        );
-        card.classList.add("card");
-        card.appendChild(text);
-        doc.body.querySelector("#card-container").appendChild(card);
-    });
+		createDatabaseInfoCard(doc, prodDatabases, "Prod");
+		createDatabaseInfoCard(doc, testDatabases, "Test");
+		createDatabaseInfoCard(doc, devDatabases,  "Dev");
 
     // Get entire Html document as a String
     const fullHtmlString = doc.documentElement.outerHTML;
@@ -39,16 +33,33 @@ export function landingPageBuilder(_req, res) {
     res.send(fullHtmlString);
 }
 
-function createDatabaseInfoCard(doc, databaseList) {
+function createDatabaseInfoCard(doc, databaseList, context) {
 		const card = doc.createElement("div");
 		const numberOfDatabases = databaseList.length;
 		const numberOfOnlineDatabases = getNumberOfOnlineDatabases(databaseList);
-		const text = doc.createTextNode(
+
+		const infoContainer = doc.createElement("div");
+		const infoTextContainer = doc.createElement("p");
+		const infoText = doc.createTextNode(
 				`Database total (online): ${numberOfDatabases} (${numberOfOnlineDatabases})`
 		);
-		
+
+		infoTextContainer.classList.add("info-text");
+		infoTextContainer.appendChild(infoText);
+		infoContainer.appendChild(infoTextContainer);
+
+		const titleContainer = doc.createElement("h2");
+		const title = doc.createTextNode(
+				`${context}`	
+		);
+
+		titleContainer.classList.add("card-title");
+		titleContainer.appendChild(title);
+
 		card.classList.add("card");
-		card.appendChild(text);
+		card.appendChild(titleContainer);
+		card.appendChild(infoContainer);
+	
 		doc.body.querySelector("#database-info-card").appendChild(card);
 
 }

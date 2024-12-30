@@ -1,3 +1,45 @@
 h1 {
+		margin: 2rem 1rem 1rem;
     color: blueviolet;
+}
+
+h2 {
+		text-align: center;
+}
+
+.centered {
+		text-align: center;
+}
+
+#database-info-card {
+		margin: auto;
+
+		display: flex;
+		flex-wrap: nowrap;
+		flex-direction: row;
+		justify-content: space-around;
+		align-content: center;
+}
+
+.card {
+		padding: 1rem;
+		margin: 1rem;
+		border: 1px solid black;
+		border-radius: 7px;
+
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-around;
+		transition: all 0.3s ease-in;
+}
+.card:hover {
+		transition: all 0.3s ease-in;
+		translate: -5px -5px;
+}
+
+.card-title {
+		color: blueviolet;
+		font-size: 14px;
+		flex-grow: 1;
 }
