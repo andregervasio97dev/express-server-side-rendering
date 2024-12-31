@@ -23,9 +23,9 @@ export function landingPageBuilder(_req, res) {
     styleElement.textContent = cssFile;
     headElement.appendChild(styleElement);
 
-		createDatabaseInfoCard(doc, prodDatabases, "Prod");
-		createDatabaseInfoCard(doc, testDatabases, "Test");
-		createDatabaseInfoCard(doc, devDatabases,  "Dev");
+    createDatabaseInfoCard(doc, prodDatabases, "Prod");
+    createDatabaseInfoCard(doc, testDatabases, "Test");
+    createDatabaseInfoCard(doc, devDatabases, "Dev");
 
     // Get entire Html document as a String
     const fullHtmlString = doc.documentElement.outerHTML;
@@ -34,36 +34,33 @@ export function landingPageBuilder(_req, res) {
 }
 
 function createDatabaseInfoCard(doc, databaseList, context) {
-		const card = doc.createElement("div");
-		const numberOfDatabases = databaseList.length;
-		const numberOfOnlineDatabases = getNumberOfOnlineDatabases(databaseList);
+    const card = doc.createElement("div");
+    const numberOfDatabases = databaseList.length;
+    const numberOfOnlineDatabases = getNumberOfOnlineDatabases(databaseList);
 
-		const infoContainer = doc.createElement("div");
-		const infoTextContainer = doc.createElement("p");
-		const infoText = doc.createTextNode(
-				`Database total (online): ${numberOfDatabases} (${numberOfOnlineDatabases})`
-		);
+    const infoContainer = doc.createElement("div");
+    const infoTextContainer = doc.createElement("p");
+    const infoText = doc.createTextNode(
+        `Database total (online): ${numberOfDatabases} (${numberOfOnlineDatabases})`
+    );
 
-		infoTextContainer.classList.add("info-text");
-		infoTextContainer.appendChild(infoText);
-		infoContainer.appendChild(infoTextContainer);
+    infoTextContainer.classList.add("info-text");
+    infoTextContainer.appendChild(infoText);
+    infoContainer.appendChild(infoTextContainer);
 
-		const titleContainer = doc.createElement("h2");
-		const title = doc.createTextNode(
-				`${context}`	
-		);
+    const titleContainer = doc.createElement("h2");
+    const title = doc.createTextNode(`${context}`);
 
-		titleContainer.classList.add("card-title");
-		titleContainer.appendChild(title);
+    titleContainer.classList.add("card-title");
+    titleContainer.appendChild(title);
 
-		card.classList.add("card");
-		card.appendChild(titleContainer);
-		card.appendChild(infoContainer);
-	
-		doc.body.querySelector("#database-info-card").appendChild(card);
+    card.classList.add("card");
+    card.appendChild(titleContainer);
+    card.appendChild(infoContainer);
 
+    doc.body.querySelector("#database-info-card").appendChild(card);
 }
 function getNumberOfOnlineDatabases(databaseList) {
-		// Todo: Implement the getter of online databases
-		return databaseList.length
+    // Todo: Implement the getter of online databases
+    return databaseList.length;
 }

@@ -1,64 +1,64 @@
 body {
-		margin: unset;
-		background: rgb(138,0,0);
-		background: radial-gradient(circle, rgba(138,0,0,1) 0%, rgba(159,102,12,1) 35%, rgba(133,112,0,1) 100%); 
-		height: 100dvh;
-		width: 100dvw;
-		font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin: unset;
+    background: rgb(152, 193, 255);
+    height: 100dvh;
+    width: 100dvw;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+        sans-serif;
 }
 
 .viewer {
-		height: 100%;
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-around;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .page-title {
 }
 
 h1 {
-    color: blueviolet;
-		font-size: 3rem;
+    color: black;
+    font-size: 3rem;
 }
 
 h2 {
-		text-align: center;
+    text-align: center;
 }
 
 .centered {
-		text-align: center;
+    text-align: center;
 }
 
 #database-info-card {
-		margin-bottom: 5rem;
-		display: flex;
-		flex-wrap: nowrap;
-		flex-direction: row;
-		justify-content: space-around;
-		align-content: center;
+    margin-bottom: 5rem;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
 }
 
 .card {
-		padding: 1rem;
-		margin: 1rem;
-		border: 1px solid black;
-		border-radius: 7px;
+    padding: 1rem;
+    margin: 1rem;
+    border: 1px solid black;
+    border-radius: 7px;
 
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: space-around;
-		transition: all 0.3s ease-in;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    transition: all 0.3s ease-in;
 }
 .card:hover {
-		transition: all 0.3s ease-in;
-		translate: -5px -5px;
+    transition: all 0.3s ease-in;
+    translate: -5px -5px;
 }
 
 .card-title {
-		color: blueviolet;
-		font-size: 14px;
-		flex-grow: 1;
+    color: black;
+    font-size: 14px;
+    flex-grow: 1;
 }
