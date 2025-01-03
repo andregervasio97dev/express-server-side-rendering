@@ -1,0 +1,11 @@
+{
+	"dir_scripts": "/home/illyanda/Scripts/",
+	"ambientes": [
+		{
+			"name": "prod",
+			"path": "/totvs8080/db"
+		},
+		{},
+		{}
+	]
+}

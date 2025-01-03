@@ -1,66 +1,82 @@
 import * as config from "../../../config/local.js";
 import { databaseStatus } from "../../scripts/database_status.js";
 
-import { JSDOM } from "jsdom";
 import fs from "fs";
 
 export function landingPageBuilder(_req, res) {
-    const prodDatabases = databaseStatus(config.PROD_DIRECTORY);
-    const testDatabases = databaseStatus(config.TEST_DIRECTORY);
-    const devDatabases = databaseStatus(config.DEV_DIRECTORY);
+	const prodDatabases = databaseStatus(config.PROD_DIRECTORY);
+	const testDatabases = databaseStatus(config.TEST_DIRECTORY);
+	const devDatabases = databaseStatus(config.DEV_DIRECTORY);
 
-    let htmlFile = fs.readFileSync("./src/html/landing_page/landing_page.html");
-    let cssFile = fs.readFileSync("./src/html/landing_page/landing_page.css");
+	let cssFile = fs.readFileSync("./src/html/landing_page/landing_page.css");
 
-    // Create a new DOMParser instance
-    const parser = new JSDOM(htmlFile);
+	let htmlHead = "<head>"
+		+ "<meta charset='UTF-8' />"
+		+ "<meta name='viewport' content='width=device-width', initial-scale=1.0/>"
+		+ "<title>Database Controller</title>"
+		+ "<style>"
+		+ cssFile
+		+ "</style>"
+		+ "</head>"
 
-    // Parse the string into an HTML document
-    const doc = parser.window.document;
-    const headElement = doc.getElementById("head");
-    const styleElement = doc.createElement("style");
+	let htmlBody = "<body>"
+		+ createTagString(
+			"div",
+			"Teste"
+		)
+		+ createTagString(
+			"div",
+			createTagString(
+				"h1",
+				"Teste H1"
+			)
+		)
+		+ "</body>"
 
-    styleElement.textContent = cssFile;
-    headElement.appendChild(styleElement);
+	const fullHtmlString = `<html>${htmlHead}${htmlBody}</html>`
+	res.set("Content-Type", "text/html");
+	res.send(fullHtmlString);
+}
 
-    createDatabaseInfoCard(doc, prodDatabases, "Prod");
-    createDatabaseInfoCard(doc, testDatabases, "Test");
-    createDatabaseInfoCard(doc, devDatabases, "Dev");
+function createTagString(tag, tagContents = "", tagClass = "", tagId = "") {
+	let fullTagString = `<${tag}`
+		+ ((tagClass !== "") ? `class='${tagClass}'` : "")
+		+ ((tagId !== "") ? `id='${tagId}'` : "")
+		+ ">"
+		+ ((tagContents !== "") ? `${tagContents}` : "")
+		+ `</${tag}>`
 
-    // Get entire Html document as a String
-    const fullHtmlString = doc.documentElement.outerHTML;
-    res.set("Content-Type", "text/html");
-    res.send(fullHtmlString);
+	return fullTagString;
 }
 
 function createDatabaseInfoCard(doc, databaseList, context) {
-    const card = doc.createElement("div");
-    const numberOfDatabases = databaseList.length;
-    const numberOfOnlineDatabases = getNumberOfOnlineDatabases(databaseList);
+	const card = doc.createElement("div");
+	const numberOfDatabases = databaseList.length;
+	const numberOfOnlineDatabases = getNumberOfOnlineDatabases(databaseList);
 
-    const infoContainer = doc.createElement("div");
-    const infoTextContainer = doc.createElement("p");
-    const infoText = doc.createTextNode(
-        `Database total (online): ${numberOfDatabases} (${numberOfOnlineDatabases})`
-    );
+	const infoContainer = doc.createElement("div");
+	const infoTextContainer = doc.createElement("p");
+	const infoText = doc.createTextNode(
+		`Database total (online): ${numberOfDatabases} (${numberOfOnlineDatabases})`
+	);
 
-    infoTextContainer.classList.add("info-text");
-    infoTextContainer.appendChild(infoText);
-    infoContainer.appendChild(infoTextContainer);
+	infoTextContainer.classList.add("info-text");
+	infoTextContainer.appendChild(infoText);
+	infoContainer.appendChild(infoTextContainer);
 
-    const titleContainer = doc.createElement("h2");
-    const title = doc.createTextNode(`${context}`);
+	const titleContainer = doc.createElement("h2");
+	const title = doc.createTextNode(`${context}`);
 
-    titleContainer.classList.add("card-title");
-    titleContainer.appendChild(title);
+	titleContainer.classList.add("card-title");
+	titleContainer.appendChild(title);
 
-    card.classList.add("card");
-    card.appendChild(titleContainer);
-    card.appendChild(infoContainer);
+	card.classList.add("card");
+	card.appendChild(titleContainer);
+	card.appendChild(infoContainer);
 
-    doc.body.querySelector("#database-info-card").appendChild(card);
+	doc.body.querySelector("#database-info-card").appendChild(card);
 }
 function getNumberOfOnlineDatabases(databaseList) {
-    // Todo: Implement the getter of online databases
-    return databaseList.length;
+	// Todo: Implement the getter of online databases
+	return databaseList.length;
 }
